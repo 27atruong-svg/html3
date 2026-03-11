@@ -18,8 +18,14 @@
 
 body {
     background-color: var(--cream);
-    background: linear-gradient(-45deg, #fdfbf7, #f0f4f8, #e1e8f0, #fdfbf7);
-    background-size: 400% 400%;
+    /* MODERN GRID PATTERN: Two linear gradients creating a crisp, architectural grid */
+    background-image: 
+        linear-gradient(rgba(26, 42, 68, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(26, 42, 68, 0.04) 1px, transparent 1px),
+        linear-gradient(-45deg, #fdfbf7, #f0f4f8, #e1e8f0, #fdfbf7);
+    
+    /* 50px 50px creates the square size; 400% is for the moving gradient */
+    background-size: 50px 50px, 50px 50px, 400% 400%;
     animation: gradientBG 15s ease infinite;
     background-attachment: fixed;
     color: var(--navy);
@@ -29,9 +35,10 @@ body {
 }
 
 @keyframes gradientBG {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
+    /* Keeps grid lines static (0% 0%) while the colors (third background) move */
+    0% { background-position: 0% 0%, 0% 0%, 0% 50%; }
+    50% { background-position: 0% 0%, 0% 0%, 100% 50%; }
+    100% { background-position: 0% 0%, 0% 0%, 0% 50%; }
 }
 
 /* --- HEADER & NAVIGATION --- */
@@ -168,6 +175,7 @@ nav a:hover {
     gap: 20px;
     justify-content: center;
     width: 100%;
+    counter-reset: gallery-counter;
 }
 
 .gallery-item {
@@ -176,7 +184,6 @@ nav a:hover {
     background: var(--navy);
     margin: 0 auto;
     width: 100%;
-    /* DEFAULT FOR HOME PAGE: Horizontal Rectangle */
     aspect-ratio: 3 / 2; 
 }
 
@@ -413,11 +420,11 @@ body:not(:has(.hero-section)) .gallery-item:nth-child(10) {
     line-height: 1.8;
 }
 
-/* Elegant Frame Effect (Does not resize images) */
+/* Elegant Frame Effect */
 .photography-page .gallery-item {
     border: 1px solid rgba(26, 42, 68, 0.08);
     background: var(--white);
-    padding: 0; /* Ensures no resizing */
+    padding: 0;
     transition: transform 0.4s ease;
 }
 
@@ -443,9 +450,4 @@ body:not(:has(.hero-section)) .gallery-item:nth-child(10) {
 
 .photography-page .gallery-item:hover::after {
     opacity: 1;
-}
-
-/* Initialize counter */
-.photography-page .gallery {
-    counter-reset: gallery-counter;
 }
